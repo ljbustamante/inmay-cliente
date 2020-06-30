@@ -103,7 +103,7 @@
 											del Producto</label>
 										<div class="col-lg-5">
 											<input class="form-control" id="idDescProducto"
-												name="descProducto" placeholder="Ingrese Paterno" />
+												name="descProducto" placeholder="Ingrese Nombre" />
 										</div>
 									</div>
 									<div class="form-group">
@@ -119,7 +119,7 @@
 										<label class="col-lg-3 control-label" for="id_reg_nombre">Stock</label>
 										<div class="col-lg-5">
 											<input class="form-control" id="idStock" name="stock"
-												placeholder="Ingrese Materno" />
+												placeholder="Ingrese Stock" />
 										</div>
 									</div>
 									<div class="form-group">
@@ -127,7 +127,7 @@
 											Unitario</label>
 										<div class="col-lg-5">
 											<input class="form-control" id="idPrecioU" name="precioU"
-												placeholder="Ingrese Hijos" />
+												placeholder="Ingrese Precio" />
 										</div>
 									</div>
 									<div class="form-group">
@@ -188,7 +188,7 @@
 			  buttons: true,
 			  dangerMode: true,
 			})
-			.then((willSave) => {
+			.then((willSave) =>{
 			  if (willSave) {
 				  $.ajax({
 						url:  'eliminarProducto',
