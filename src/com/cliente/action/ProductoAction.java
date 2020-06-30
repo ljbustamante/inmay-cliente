@@ -1,6 +1,8 @@
 package com.cliente.action;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -17,8 +19,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.cibertec.entidad.Categoria;
-import com.cibertec.entidad.DistritoBean;
-import com.cibertec.entidad.DocenteBean;
 import com.cibertec.entidad.Pais;
 import com.cibertec.entidad.Producto;
 import com.google.gson.Gson;
@@ -27,7 +27,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("dawi")
 public class ProductoAction extends ActionSupport {
 	
-	private String URL_PRODUCTO="http://localhost:8080/inmay-servidor/rest/cliente/";
+	private String URL_PRODUCTO="http://localhost:8080/inmay-servidor/rest/producto/";
 	private String URL_CATEGORIA="";
 	
 	//
@@ -40,10 +40,55 @@ public class ProductoAction extends ActionSupport {
 	//
 	private HttpClient httpClient;
 	
+	
+	private double p1;
+	private double p2;
+	private List<Producto> listaProductos2;
+
+	public List<Producto> getListaProductos2() {
+		return listaProductos2;
+	}
+
+	public void setListaProductos2(List<Producto> listaProductos2) {
+		this.listaProductos2 = listaProductos2;
+	}
+
+	public double getP1() {
+		return p1;
+	}
+
+	public void setP1(double p1) {
+		this.p1 = p1;
+	}
+
+	public double getP2() {
+		return p2;
+	}
+
+	public void setP2(double p2) {
+		this.p2 = p2;
+	}
+
+	
+	
 	public ProductoAction() {
 		httpClient=HttpClientBuilder.create().build();
 	}
 	
+	@Action(value="/prueba", results = {@Result(name="ok", location="/list-prueba.jsp")})
+	public String prueba() throws ClientProtocolException, IOException{
+		//definir método "GET"
+		HttpGet httpGet=new HttpGet(URL_PRODUCTO+p1+"/"+p2);
+		//respuesta
+		HttpResponse httpResponse=httpClient.execute(httpGet);
+		//obtener el valor de la respuesta
+		String json=EntityUtils.toString(httpResponse.getEntity());
+		//
+		Gson gson=new Gson();
+		listaProductos=gson.fromJson(json, Producto[].class);
+		listaProductos2 = Arrays.asList(listaProductos);
+		return "ok";
+	}
 	
 	//Listar Paises
 	@Action(value="/listAllCategorias",results= {@Result(name="ok",type="json")})
