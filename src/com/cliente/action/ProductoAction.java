@@ -32,7 +32,7 @@ public class ProductoAction extends ActionSupport {
 	//
 	private Categoria[] listaCategorias;
 	private Producto[] listaProductos;
-	private Proveedor[] listProveedor;
+	private Proveedor[] listaProveedores;
 	private Producto producto;
 	private int codigo;
 	private String dataMensaje;
@@ -44,8 +44,8 @@ public class ProductoAction extends ActionSupport {
 		httpClient = HttpClientBuilder.create().build();
 	}
 	
-	@Action(value = "/listAllProveedor", results = { @Result(name = "ok", type = "json") })
-	public String listAllProveedor() throws ClientProtocolException, IOException {
+	@Action(value = "/listAllProveedores", results = { @Result(name = "ok", type = "json") })
+	public String listAllProveedores() throws ClientProtocolException, IOException {
 		// definir método "GET"
 		HttpGet httpGet = new HttpGet(URL_PROVEEDOR);
 		// respuesta
@@ -54,7 +54,7 @@ public class ProductoAction extends ActionSupport {
 		String json = EntityUtils.toString(httpResponse.getEntity());
 		//
 		Gson gson = new Gson();
-		listProveedor = gson.fromJson(json, Proveedor[].class);
+		listaProveedores = gson.fromJson(json, Proveedor[].class);
 		return "ok";
 	}
 
@@ -77,7 +77,7 @@ public class ProductoAction extends ActionSupport {
 	@Action(value = "/listAllProductos", results = { @Result(name = "ok", type = "json") })
 	public String listAllProductos() throws ClientProtocolException, IOException {
 		// definir método "GET"
-		HttpGet httpGet = new HttpGet(URL_PRODUCTO);
+		HttpGet httpGet = new HttpGet(URL_PRODUCTO+"listar");
 		// respuesta
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		// obtener el valor de la respuesta
@@ -190,12 +190,12 @@ public class ProductoAction extends ActionSupport {
 		return dataJSON;
 	}
 
-	public Proveedor[] getListProveedor() {
-		return listProveedor;
+	public Proveedor[] getListaProveedores() {
+		return listaProveedores;
 	}
 
-	public void setListProveedor(Proveedor[] listProveedor) {
-		this.listProveedor = listProveedor;
+	public void setListaProveedores(Proveedor[] listaProveedores) {
+		this.listaProveedores = listaProveedores;
 	}
 
 	public void setDataJSON(String dataJSON) {

@@ -30,7 +30,7 @@
 
 
 
-<title>Usuario</title>
+<title>Proveedor</title>
 <style>
 .modal-header, h4, .close {
 	background-color: #286090;
@@ -50,21 +50,19 @@
 </head>
 <body>
 	<div class="container">
-		<h3 align="center">Lista Productos</h3>
+		<h3 align="center">Lista de Proveedores</h3>
 		<button type="button" data-toggle='modal' class='btn btn-primary'
-			id="validateBtnw2" onclick="mostrarVentana()">Nuevo Producto</button>
+			id="validateBtnw2" onclick="mostrarVentana()">Nuevo
+			Proveedor</button>
 		<br>&nbsp;<br>
-		<div id="divEmpleado">
-			<table id="id_table_docente"
+		<div id="divProveedor">
+			<table id="id_table_proveedor"
 				class="table table-striped table-bordered">
 				<thead>
 					<tr>
 						<th>Codigo</th>
-						<th>Nombre Producto</th>
-						<th>Nombre Categoria</th>
-						<th>Stock</th>
-						<th>Precio Unitario</th>
 						<th>Empresa</th>
+						<th>Cargo</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -84,13 +82,13 @@
 			<div class="modal-content">
 				<div class="modal-header" style="padding: 5px 20px">
 
-					<h4 id="idMensaje">Registro de Productos</h4>
+					<h4 id="idMensaje">Registro de Proveedor</h4>
 				</div>
 				<div class="modal-body" style="padding: 20px 10px;">
 					<form id="idRegistra" accept-charset="UTF-8" action=""
 						class="form-horizontal" method="post" data-toggle="validator"
 						role="form">
-						<input type="hidden" id="idProducto" name="codigo">
+						<input type="hidden" id="ididProveedor" name="idProveedor">
 
 						<div class="panel-group" id="steps">
 							<!-- Step 1 -->
@@ -99,51 +97,24 @@
 									style="text-align: center; font-size: 14px"></div>
 								<div class="panel-body">
 									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Nombre del Producto</label>
+										<label class="col-lg-3 control-label" for="id_reg_empresa">Empresa</label>
 										<div class="col-lg-5">
-											<input class="form-control" id="idDescProducto" name="descProducto"
-												placeholder="Ingrese Paterno" />
+											<input class="form-control" id="idEmpresa" name="empresa"
+												placeholder="Ingrese Empresa" />
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_distrito">Categoria</label>
+										<label class="col-lg-3 control-label" for="id_reg_cargo">Cargo</label>
 										<div class="col-lg-5">
-											<select id="idCategoria" name="idCategoria"
-												class='form-control'>
-												<option value=" ">[SELECCIONE]</option>
-											</select>
+											<input class="form-control" id="idCargo" name="cargo"
+												placeholder="Ingrese Cargo" />
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Stock</label>
-										<div class="col-lg-5">
-											<input class="form-control" id="idStock" name="stock"
-												placeholder="Ingrese Materno" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Precio Unitario</label>
-										<div class="col-lg-5">
-											<input class="form-control" id="idPrecioU" name="precioU"
-												placeholder="Ingrese Hijos" />
-										</div>
-									</div>
-									 <div class="form-group">
-		                                        <label class="col-lg-3 control-label" for="id_reg_distrito">Empresa</label>
-		                                        <div class="col-lg-5">
-													<select id="idProveedor" name="idProveedor" class='form-control'>
-							                                 <option value=" " >[SELECCIONE]</option>
-							                         </select>
-		                                        </div>
-		                                    </div>
-
-
-
 								</div>
 								<div class="modal-footer"
 									style="padding: 5px 20px; text-align: center">
 									<button type="button" class="btn btn-primary" id="validatetBtn"
-										onclick="grabarDocente()">Registrar Docente</button>
+										onclick="grabarProveedor()">Registrar Proveedor</button>
 									<button type="button" class="btn btn-danger" id="resetBtn">Cerrar</button>
 								</div>
 							</div>
@@ -156,30 +127,27 @@
 	<!-- FIN DIV NUEVO -->
 
 	<script type="text/javascript">
-	function tablaDocente(){
-		$("#id_table_docente").DataTable().destroy();
-		$("#id_table_docente tbody").empty(); 
-		$.getJSON("listAllProductos",{}, function (response){
-			$.each(response.listaProductos, function(index, item){
-			    var editar="<button type='button' class='btn btn-success' onclick='editarDocente("+item.idProducto+")'>Editar</button>";
-			    var eliminar='<button type="button" class="btn btn-warning" onclick="eliminarDocente('+item.idProducto+')">Eliminar</button>';
+	function tablaProveedor(){
+		$("#id_table_proveedor").DataTable().destroy();
+		$("#id_table_proveedor tbody").empty(); 
+		$.getJSON("listarProveedores",{}, function (response){
+			$.each(response.listaProveedores, function(index, item){
+			    var editar="<button type='button' class='btn btn-success' onclick='editarProveedor("+item.idProveedor+")'>Editar</button>";
+			    var eliminar='<button type="button" class="btn btn-warning" onclick="eliminarProveedor('+item.idProveedor+')">Eliminar</button>';
 			    
-				$("#id_table_docente").append("<tr><td>"+item.idProducto+"</td>"+
-												  "<td>"+item.descProducto+"</td>"+
-												  "<td>"+item.idCategoria+"</td>"+
-												  "<td>"+item.stock+"</td>"+
-												  "<td>"+item.precioU+"</td>"+
-												  "<td>"+item.idProveedor+"</td>"+
+				$("#id_table_proveedor").append("<tr><td>"+item.idProveedor+"</td>"+
+												  "<td>"+item.empresa+"</td>"+
+												  "<td>"+item.cargo+"</td>"+
 												  "<td>"+editar+"</td>"+
 												  "<td>"+eliminar+"</td>");
 			});
-			$("#id_table_docente").DataTable().draw();
-			$("#id_table_docente").DataTable();
+			$("#id_table_proveedor").DataTable().draw();
+			$("#id_table_proveedor").DataTable();
 		});
 	}
-	function eliminarDocente(cod){
+	function eliminarProveedor(cod){
 		swal({
-			  title: "Seguro de eliminar Producto con Código : "+cod,
+			  title: "Seguro de eliminar Proveedor con id : "+cod,
 			  text: "",
 			  icon: "warning",
 			  buttons: true,
@@ -188,14 +156,14 @@
 			.then((willSave) => {
 			  if (willSave) {
 				  $.ajax({
-						url:  'eliminarProducto',
+						url:  'eliminarProveedor',
 						type: 'POST',
 						data: {codigo:cod},
 						success:function(data){
 							if(data.dataMensaje==1){
 								console.log(data);
 								swal("Registro eliminado correctamente...","","success");
-								tablaDocente();
+								tablaProveedor();
 							}
 							else
 								swal("Error en la eliminación del registro...","","error");
@@ -208,34 +176,27 @@
 			})
 	}
 
-	function editarDocente(cod){
-		$.getJSON("buscarProducto",{codigo:cod}, function (response){
-			$("#idProducto").val(response.producto.idProducto);		
-			$("#idDescProducto").val(response.producto.descProducto);
-			$("#idCategoria").val(response.producto.idCategoria);
-			$("#idStock").val(response.producto.stock);
-			$("#idPrecioU").val(response.producto.precioU);
-			$("#idProveedor").val(response.producto.idProveedor);
-			$("#idMensaje").text("Actualizar Producto");
+	function editarProveedor(cod){
+		$.getJSON("buscarProveedor",{codigo:cod}, function (response){
+			$("#ididProveedor").val(response.proveedor.idProveedor);		
+			$("#idEmpresa").val(response.proveedor.empresa);
+			$("#idCargo").val(response.proveedor.cargo);
+			$("#idMensaje").text("Actualizar Proveedor");
 			$("#idModalRegistra").modal({show:true,keyboard:false,backdrop:'static'});
 		})
 		
 	}
 	
-	function grabarDocente(){
+	function grabarProveedor(){
 		
 		var validator = $('#idRegistra').data('bootstrapValidator');
         validator.validate();
         if (validator.isValid()) {
-			var json,cod,nom,cat,sto,pre,prov;
-			cod=$("#idProducto").val();		
-			nom=$("#idDescProducto").val();
-			cat=$("#idCategoria").val();
-			sto=$("#idStock").val();
-			pre=$("#idPrecioU").val();
-			prov=$("#idProveedor").val();
-			json=JSON.stringify({idProducto:cod,descProducto:nom,idCategoria:cat,stock:sto,
-				precioU:pre,idProveedor:prov});
+			var json,cod,emp,car;
+			cod=$("#ididProveedor").val();		
+			emp=$("#idEmpresa").val();
+			car=$("#idCargo").val();
+			json=JSON.stringify({idProveedor:cod,empresa:emp,cargo:car});
 			swal({
 				  title: "Seguro de Guardar datos : ",
 				  text: "",
@@ -246,14 +207,14 @@
 				.then((willSave) => {
 				  if (willSave) {
 					  $.ajax({
-							url:  'saveProducto',
+							url:  'guardarProveedor',
 							type: 'POST',
 							data: {dataJSON:json,codigo:cod},
 							success:function(data){
 								if(data.dataMensaje==1){
 									console.log(data);
 									swal("Registro Guardado correctamente...","","success");
-									tablaDocente();
+									tablaProveedor();
 									$("#idModalRegistra").modal("hide");
 									$('#idRegistra').data('bootstrapValidator').resetForm(true);
 				   			    	$('#idRegistra').trigger("reset");
@@ -275,36 +236,16 @@
 	function mostrarVentana(){
 		$('#idRegistra').data('bootstrapValidator').resetForm(true);
 		$('#idRegistra').trigger("reset");
-		$("#idProducto").val(0);		
-		$("#idMensaje").text("Registrar Docente");
-		$("#validatetBtn").text("Registrar Docente");
+		$("#idCodigo").val(0);		
+		$("#idMensaje").text("Registrar Proveedor");
+		$("#validatetBtn").text("Registrar Proveedor");
 		$("#idModalRegistra").modal({show:true,keyboard:false,backdrop:'static'});
-	}
-	function mostrarCategorias(){
-		$.getJSON("listAllCategorias",{},
-		  function(data){
-			$.each(data.listaCategorias,function(index,item){
-			  $("#idCategoria").append("<option value='"+item.idCategoria+"'>"+
-							item.nombreCat+"</option>");	
-				})
-		})
-	}
-	function mostrarDistritos(){
-		$.getJSON("listAllProveedor",{},
-		  function(data){
-			$.each(data.listProveedor,function(index,item){
-			  $("#idProveedor").append("<option value='"+item.idProveedor+"'>"+
-							item.empresa+"</option>");	
-				})
-		})
 	}
 
 </script>
-	<script>	
-	$(document).ready(function() {
-		mostrarDistritos();	
-		mostrarCategorias();
-		tablaDocente();
+<script>	
+	$(document).ready(function() {	
+		tablaProveedor();
 		 $('#resetBtn').click(function() {
 		        $('#idRegistra').data('bootstrapValidator').resetForm(true);
 		    	$('#idRegistra').trigger("reset");
@@ -312,26 +253,26 @@
 		    });
 	});
 </script>
-	<script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function() {
 	//validar registra nuevo empleado
 	$('#idRegistra').bootstrapValidator({
-	    message: 'This value is not valid',
+	    message: 'Este valor no es válido',
 	    feedbackIcons: {
 	        valid: 'glyphicon glyphicon-ok',
 	        invalid: 'glyphicon glyphicon-remove',
 	        validating: 'glyphicon glyphicon-refresh'
 	    },
 	    fields: {
-	    	descProducto: {
+	    	empresa: {
 	            validators: {
 	                notEmpty: {
-	                    message: 'El campo Nombre es requerido. No puede estar vacio'
+	                    message: 'El campo Empresa es requerido. No puede estar vacio'
 	                },
 	                stringLength: {
 	                    min: 3,
 	                    max: 30,
-	                    message: 'El nombre debe contener minimo 3 y maximo de 30 letras'
+	                    message: 'El nombre de la empresa debe contener minimo 3 y maximo de 30 letras'
 	                },
 	                regexp: {
 	                    regexp: /^[a-zA-Z\s\á\é\í\ó\ú\Á\É\Í\Ó\Ú\ñ\Ñ]+$/,
@@ -339,10 +280,10 @@ $(document).ready(function() {
 	                }
 	            }
 	        },
-	        paterno:{
+	        cargo:{
 	        	validators:{
 	        		notEmpty: {
-	                    message: 'El campo Paterno es requerido. No puede estar vacio'
+	                    message: 'El campo Cargo es requerido. No puede estar vacio'
 	                }
 	        	}
 	        }

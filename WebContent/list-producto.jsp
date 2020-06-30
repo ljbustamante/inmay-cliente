@@ -30,7 +30,7 @@
 
 
 
-<title>Usuario</title>
+<title>Producto</title>
 <style>
 .modal-header, h4, .close {
 	background-color: #286090;
@@ -50,7 +50,7 @@
 </head>
 <body>
 	<div class="container">
-		<h3 align="center">Lista Productos</h3>
+		<h3 align="center">Lista de Productos</h3>
 		<button type="button" data-toggle='modal' class='btn btn-primary'
 			id="validateBtnw2" onclick="mostrarVentana()">Nuevo Producto</button>
 		<br>&nbsp;<br>
@@ -99,10 +99,11 @@
 									style="text-align: center; font-size: 14px"></div>
 								<div class="panel-body">
 									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Nombre del Producto</label>
+										<label class="col-lg-3 control-label" for="id_reg_nombre">Nombre
+											del Producto</label>
 										<div class="col-lg-5">
-											<input class="form-control" id="idDescProducto" name="descProducto"
-												placeholder="Ingrese Paterno" />
+											<input class="form-control" id="idDescProducto"
+												name="descProducto" placeholder="Ingrese Paterno" />
 										</div>
 									</div>
 									<div class="form-group">
@@ -122,20 +123,22 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Precio Unitario</label>
+										<label class="col-lg-3 control-label" for="id_reg_nombre">Precio
+											Unitario</label>
 										<div class="col-lg-5">
 											<input class="form-control" id="idPrecioU" name="precioU"
 												placeholder="Ingrese Hijos" />
 										</div>
 									</div>
-									 <div class="form-group">
-		                                        <label class="col-lg-3 control-label" for="id_reg_distrito">Empresa</label>
-		                                        <div class="col-lg-5">
-													<select id="idDistrito" name="idProveedor" class='form-control'>
-							                                 <option value=" " >[SELECCIONE]</option>
-							                         </select>
-		                                        </div>
-		                                    </div>
+									<div class="form-group">
+										<label class="col-lg-3 control-label" for="id_reg_distrito">Empresa</label>
+										<div class="col-lg-5">
+											<select id="idProveedor" name="idProveedor"
+												class='form-control'>
+												<option value=" ">[SELECCIONE]</option>
+											</select>
+										</div>
+									</div>
 
 
 
@@ -143,7 +146,7 @@
 								<div class="modal-footer"
 									style="padding: 5px 20px; text-align: center">
 									<button type="button" class="btn btn-primary" id="validatetBtn"
-										onclick="grabarDocente()">Registrar Docente</button>
+										onclick="grabarDocente()">Registrar Producto</button>
 									<button type="button" class="btn btn-danger" id="resetBtn">Cerrar</button>
 								</div>
 							</div>
@@ -215,7 +218,7 @@
 			$("#idCategoria").val(response.producto.idCategoria);
 			$("#idStock").val(response.producto.stock);
 			$("#idPrecioU").val(response.producto.precioU);
-			$("#idDistrito").val(response.producto.idProveedor);
+			$("#idProveedor").val(response.producto.idProveedor);
 			$("#idMensaje").text("Actualizar Producto");
 			$("#idModalRegistra").modal({show:true,keyboard:false,backdrop:'static'});
 		})
@@ -233,7 +236,7 @@
 			cat=$("#idCategoria").val();
 			sto=$("#idStock").val();
 			pre=$("#idPrecioU").val();
-			prov=$("#idDistrito").val();
+			prov=$("#idProveedor").val();
 			json=JSON.stringify({idProducto:cod,descProducto:nom,idCategoria:cat,stock:sto,
 				precioU:pre,idProveedor:prov});
 			swal({
@@ -250,7 +253,7 @@
 							type: 'POST',
 							data: {dataJSON:json,codigo:cod},
 							success:function(data){
-								if(data.dataMensaje==-1){
+								if(data.dataMensaje==1){
 									console.log(data);
 									swal("Registro Guardado correctamente...","","success");
 									tablaDocente();
@@ -289,12 +292,12 @@
 				})
 		})
 	}
-	function mostrarDistritos(){
-		$.getJSON("listAllDistritos",{},
+	function mostrarProveedores(){
+		$.getJSON("listAllProveedores",{},
 		  function(data){
-			$.each(data.listaDistritos,function(index,item){
-			  $("#idDistrito").append("<option value='"+item.idDistrito+"'>"+
-							item.descDistrito+"</option>");	
+			$.each(data.listaProveedores,function(index,item){
+			  $("#idProveedor").append("<option value='"+item.idProveedor+"'>"+
+							item.empresa+"</option>");	
 				})
 		})
 	}
@@ -302,7 +305,7 @@
 </script>
 	<script>	
 	$(document).ready(function() {
-		mostrarDistritos();	
+		mostrarProveedores();	
 		mostrarCategorias();
 		tablaDocente();
 		 $('#resetBtn').click(function() {
