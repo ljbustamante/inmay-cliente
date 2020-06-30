@@ -17,23 +17,22 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.cibertec.entidad.Categoria;
-import com.cibertec.entidad.Distrito;
-import com.cibertec.entidad.Pais;
 import com.cibertec.entidad.Producto;
+import com.cibertec.entidad.Proveedor;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage("dawi")
 public class ProductoAction extends ActionSupport {
 	
-	private String URL_PRODUCTO = "http://localhost:8080/inmay-servidor/rest/producto/listar";
+	private String URL_PRODUCTO = "http://localhost:8080/inmay-servidor/rest/producto/";
 	private String URL_CATEGORIA = "http://localhost:8080/inmay-servidor/rest/categoria/listar";
-	private String URL_DISTRITO = "http://localhost:8080/inmay-servidor/rest/distrito/listar";
+	private String URL_PROVEEDOR = "http://localhost:8080/inmay-servidor/rest/proveedor/listar";
 
 	//
 	private Categoria[] listaCategorias;
 	private Producto[] listaProductos;
-	private Distrito[] listaDistritos;
+	private Proveedor[] listProveedor;
 	private Producto producto;
 	private int codigo;
 	private String dataMensaje;
@@ -45,17 +44,17 @@ public class ProductoAction extends ActionSupport {
 		httpClient = HttpClientBuilder.create().build();
 	}
 	
-	@Action(value = "/listAllDistritos", results = { @Result(name = "ok", type = "json") })
-	public String listAllDistritos() throws ClientProtocolException, IOException {
+	@Action(value = "/listAllProveedor", results = { @Result(name = "ok", type = "json") })
+	public String listAllProveedor() throws ClientProtocolException, IOException {
 		// definir método "GET"
-		HttpGet httpGet = new HttpGet(URL_DISTRITO);
+		HttpGet httpGet = new HttpGet(URL_PROVEEDOR);
 		// respuesta
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		// obtener el valor de la respuesta
 		String json = EntityUtils.toString(httpResponse.getEntity());
 		//
 		Gson gson = new Gson();
-		listaDistritos = gson.fromJson(json, Distrito[].class);
+		listProveedor = gson.fromJson(json, Proveedor[].class);
 		return "ok";
 	}
 
@@ -145,6 +144,62 @@ public class ProductoAction extends ActionSupport {
 		}
 
 		return "ok";
+	}
+
+	public Categoria[] getListaCategorias() {
+		return listaCategorias;
+	}
+
+	public void setListaCategorias(Categoria[] listaCategorias) {
+		this.listaCategorias = listaCategorias;
+	}
+
+	public Producto[] getListaProductos() {
+		return listaProductos;
+	}
+
+	public void setListaProductos(Producto[] listaProductos) {
+		this.listaProductos = listaProductos;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getDataMensaje() {
+		return dataMensaje;
+	}
+
+	public void setDataMensaje(String dataMensaje) {
+		this.dataMensaje = dataMensaje;
+	}
+
+	public String getDataJSON() {
+		return dataJSON;
+	}
+
+	public Proveedor[] getListProveedor() {
+		return listProveedor;
+	}
+
+	public void setListProveedor(Proveedor[] listProveedor) {
+		this.listProveedor = listProveedor;
+	}
+
+	public void setDataJSON(String dataJSON) {
+		this.dataJSON = dataJSON;
 	}
 
 }
