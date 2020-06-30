@@ -60,12 +60,11 @@
 				<thead>
 					<tr>
 						<th>Codigo</th>
-						<th>Nombre</th>
-						<th>Paterno</th>
-						<th>Materno</th>
-						<th>Sexo</th>
-						<th>Hijos</th>
-						<th>Sueldo</th>
+						<th>Nombre Producto</th>
+						<th>Nombre Categoria</th>
+						<th>Stock</th>
+						<th>Precio Unitario</th>
+						<th>Empresa</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -91,7 +90,7 @@
 					<form id="idRegistra" accept-charset="UTF-8" action=""
 						class="form-horizontal" method="post" data-toggle="validator"
 						role="form">
-						<input type="hidden" id="idCodigo" name="codigo">
+						<input type="hidden" id="idProducto" name=idProducto>
 
 						<div class="panel-group" id="steps">
 							<!-- Step 1 -->
@@ -100,66 +99,43 @@
 									style="text-align: center; font-size: 14px"></div>
 								<div class="panel-body">
 									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Nombre</label>
+										<label class="col-lg-3 control-label" for="id_reg_nombre">Nombre del Producto</label>
 										<div class="col-lg-5">
-											<input class="form-control" id="idNombre" name="nombre"
-												placeholder="Ingrese el Nombre" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Paterno</label>
-										<div class="col-lg-5">
-											<input class="form-control" id="idPaterno" name="paterno"
+											<input class="form-control" id="idDescProducto" name="descProducto"
 												placeholder="Ingrese Paterno" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Materno</label>
-										<div class="col-lg-5">
-											<input class="form-control" id="idMaterno" name="materno"
-												placeholder="Ingrese Materno" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Sexo</label>
-										<div class="col-lg-5">
-											<select id="idSexo" name="sexo" class='form-control'>
-												<option value=" ">[SELECCIONE]</option>
-												<option value="Masculino">Masculino</option>
-												<option value="Femenino">Femenino</option>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_nombre">Hijos</label>
-										<div class="col-lg-5">
-											<input class="form-control" id="idHijos" name="numHijos"
-												placeholder="Ingrese Hijos" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_sueldo">Sueldo</label>
-										<div class="col-lg-5">
-											<input class="form-control" id="idSueldo" name="sueldo"
-												placeholder="Ingrese Sueldo" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-lg-3 control-label" for="id_reg_direccion">Dirección</label>
-										<div class="col-lg-5">
-											<input class="form-control" id="idDireccion" name="direccion"
-												placeholder="Ingrese Direccion" />
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-lg-3 control-label" for="id_reg_distrito">Categoria</label>
 										<div class="col-lg-5">
-											<select id="idDistrito" name="codigoDistrito"
+											<select id="idCategoria" name="idCategoria"
 												class='form-control'>
 												<option value=" ">[SELECCIONE]</option>
 											</select>
 										</div>
 									</div>
+									<div class="form-group">
+										<label class="col-lg-3 control-label" for="id_reg_nombre">Stock</label>
+										<div class="col-lg-5">
+											<input class="form-control" id="idStock" name="stock"
+												placeholder="Ingrese Materno" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-lg-3 control-label" for="id_reg_nombre">Precio Unitario</label>
+										<div class="col-lg-5">
+											<input class="form-control" id="idPrecioU" name="precioU"
+												placeholder="Ingrese Hijos" />
+										</div>
+									</div>
+									 <div class="form-group">
+		                                        <label class="col-lg-3 control-label" for="id_reg_distrito">Empresa</label>
+		                                        <div class="col-lg-5">
+													<select id="idDistrito" name="idProveedor" class='form-control'>
+							                                 <option value=" " >[SELECCIONE]</option>
+							                         </select>
+		                                        </div>
+		                                    </div>
 
 
 
@@ -183,18 +159,17 @@
 	function tablaDocente(){
 		$("#id_table_docente").DataTable().destroy();
 		$("#id_table_docente tbody").empty(); 
-		$.getJSON("listAllDocentes",{}, function (response){
-			$.each(response.listaDocentes, function(index, item){
-			    var editar="<button type='button' class='btn btn-success' onclick='editarDocente("+item.codigo+")'>Editar</button>";
-			    var eliminar='<button type="button" class="btn btn-warning" onclick="eliminarDocente('+item.codigo+')">Eliminar</button>';
+		$.getJSON("listAllProductos",{}, function (response){
+			$.each(response.listaProductos, function(index, item){
+			    var editar="<button type='button' class='btn btn-success' onclick='editarDocente("+item.idProducto+")'>Editar</button>";
+			    var eliminar='<button type="button" class="btn btn-warning" onclick="eliminarDocente('+item.idProducto+')">Eliminar</button>';
 			    
-				$("#id_table_docente").append("<tr><td>"+item.codigo+"</td>"+
-												  "<td>"+item.nombre+"</td>"+
-												  "<td>"+item.paterno+"</td>"+
-												  "<td>"+item.materno+"</td>"+
-												  "<td>"+item.sexo+"</td>"+
-												  "<td>"+item.numHijos+"</td>"+
-												  "<td>"+item.sueldo+"</td>"+
+				$("#id_table_docente").append("<tr><td>"+item.idProducto+"</td>"+
+												  "<td>"+item.descProducto+"</td>"+
+												  "<td>"+item.idCategoria+"</td>"+
+												  "<td>"+item.stock+"</td>"+
+												  "<td>"+item.precioU+"</td>"+
+												  "<td>"+item.idProveedor+"</td>"+
 												  "<td>"+editar+"</td>"+
 												  "<td>"+eliminar+"</td>");
 			});
@@ -204,7 +179,7 @@
 	}
 	function eliminarDocente(cod){
 		swal({
-			  title: "Seguro de eliminar Docente con Código : "+cod,
+			  title: "Seguro de eliminar Producto con Código : "+cod,
 			  text: "",
 			  icon: "warning",
 			  buttons: true,
@@ -213,7 +188,7 @@
 			.then((willSave) => {
 			  if (willSave) {
 				  $.ajax({
-						url:  'eliminarDocente',
+						url:  'eliminarProducto',
 						type: 'POST',
 						data: {codigo:cod},
 						success:function(data){
@@ -234,17 +209,14 @@
 	}
 
 	function editarDocente(cod){
-		$.getJSON("buscarDocente",{codigo:cod}, function (response){
-			$("#idCodigo").val(response.docente.codigo);		
-			$("#idNombre").val(response.docente.nombre);
-			$("#idPaterno").val(response.docente.paterno);
-			$("#idMaterno").val(response.docente.materno);
-			$("#idSexo").val(response.docente.sexo);
-			$("#idHijos").val(response.docente.numHijos);
-			$("#idSueldo").val(response.docente.sueldo);
-			$("#idDireccion").val(response.docente.direccion);
-			$("#idDistrito").val(response.docente.codigoDistrito);
-			$("#idMensaje").text("Actualizar Docente");
+		$.getJSON("buscarProducto",{codigo:cod}, function (response){
+			$("#idProducto").val(response.producto.idProducto);		
+			$("#idDescProducto").val(response.producto.descProducto);
+			$("#idCategoria").val(response.producto.idCategoria);
+			$("#idStock").val(response.producto.stock);
+			$("#idPrecioU").val(response.producto.precioU);
+			$("#idDistrito").val(response.producto.idProveedor);
+			$("#idMensaje").text("Actualizar Producto");
 			$("#idModalRegistra").modal({show:true,keyboard:false,backdrop:'static'});
 		})
 		
@@ -255,18 +227,15 @@
 		var validator = $('#idRegistra').data('bootstrapValidator');
         validator.validate();
         if (validator.isValid()) {
-			var json,cod,nom,pat,mat,sex,hij,sue,dir,dis;
-			cod=$("#idCodigo").val();		
-			nom=$("#idNombre").val();
-			pat=$("#idPaterno").val();
-			mat=$("#idMaterno").val();
-			sex=$("#idSexo").val();
-			hij=$("#idHijos").val();
-			sue=$("#idSueldo").val();
-			dir=$("#idDireccion").val();
-			dis=$("#idDistrito").val();
-			json=JSON.stringify({codigo:cod,nombre:nom,paterno:pat,materno:mat,
-								 sexo:sex,numHijos:hij,sueldo:sue,direccion:dir,codigoDistrito:dis});
+			var json,cod,nom,cat,sto,pre,prov;
+			cod=$("#idProducto").val();		
+			nom=$("#idDescProducto").val();
+			cat=$("#idCategoria").val();
+			sto=$("#idStock").val();
+			pre=$("#idPrecioU").val();
+			prov=$("#idDistrito").val();
+			json=JSON.stringify({idProducto:cod,descProducto:nom,idCategoria:cat,stock:sto,
+				precioU:pre,idProveedor:prov});
 			swal({
 				  title: "Seguro de Guardar datos : ",
 				  text: "",
@@ -277,11 +246,11 @@
 				.then((willSave) => {
 				  if (willSave) {
 					  $.ajax({
-							url:  'saveDocente',
+							url:  'saveProducto',
 							type: 'POST',
 							data: {dataJSON:json,codigo:cod},
 							success:function(data){
-								if(data.dataMensaje==1){
+								if(data.dataMensaje==-1){
 									console.log(data);
 									swal("Registro Guardado correctamente...","","success");
 									tablaDocente();
@@ -306,17 +275,26 @@
 	function mostrarVentana(){
 		$('#idRegistra').data('bootstrapValidator').resetForm(true);
 		$('#idRegistra').trigger("reset");
-		$("#idCodigo").val(0);		
+		$("#idProducto").val(0);		
 		$("#idMensaje").text("Registrar Docente");
 		$("#validatetBtn").text("Registrar Docente");
 		$("#idModalRegistra").modal({show:true,keyboard:false,backdrop:'static'});
+	}
+	function mostrarCategorias(){
+		$.getJSON("listAllCategorias",{},
+		  function(data){
+			$.each(data.listaCategorias,function(index,item){
+			  $("#idCategoria").append("<option value='"+item.idCategoria+"'>"+
+							item.nombreCat+"</option>");	
+				})
+		})
 	}
 	function mostrarDistritos(){
 		$.getJSON("listAllDistritos",{},
 		  function(data){
 			$.each(data.listaDistritos,function(index,item){
-			  $("#idDistrito").append("<option value='"+item.codigo+"'>"+
-							item.nombre+"</option>");	
+			  $("#idDistrito").append("<option value='"+item.idDistrito+"'>"+
+							item.descDistrito+"</option>");	
 				})
 		})
 	}
@@ -325,6 +303,7 @@
 	<script>	
 	$(document).ready(function() {
 		mostrarDistritos();	
+		mostrarCategorias();
 		tablaDocente();
 		 $('#resetBtn').click(function() {
 		        $('#idRegistra').data('bootstrapValidator').resetForm(true);
@@ -344,7 +323,7 @@ $(document).ready(function() {
 	        validating: 'glyphicon glyphicon-refresh'
 	    },
 	    fields: {
-	    	nombre: {
+	    	descProducto: {
 	            validators: {
 	                notEmpty: {
 	                    message: 'El campo Nombre es requerido. No puede estar vacio'
